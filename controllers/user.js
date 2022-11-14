@@ -22,9 +22,9 @@ exports.signup = (req, res, next) => {//hasher le mdp avec une fonction async
       .catch(error => res.status(500).json({ error }));
   };
 
-  exports.login = (req, res, next) => { //fonciton login qui permet de verifier si un utilisateur existe dans la bdd et si le mdp correspond à l'utilisateur
+  exports.login = (req, res, next) => { //fonction login qui permet de verifier si un utilisateur existe dans la bdd et si le mdp correspond à l'utilisateur
     User.findOne({ email: req.body.email }) // objet qui sert de filtre avec le champ e mail + la valeur transmire (req body email)
-        .then(user => {  //récupéré la valeur trouvée par la requête
+        .then(user => {  //récupérer la valeur trouvée par la requête
             if (!user) { //vérifier si elle est null (if 'user === null ou !user)
                 return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'});
             }
@@ -42,7 +42,7 @@ exports.signup = (req, res, next) => {//hasher le mdp avec une fonction async
                         userId: user._id, //avec un objet qui va contenir les info necessaire a l'authentification des requêtes
                         token: jwt.sign(  // ainsi qu'un token 
                         { userId: user._id },
-                        'RANDON_TOKEN_SECRET',
+                        'RANDOM_TOKEN_SECRET',
                         { expiresIn: '24h' }
                         ) 
                     });
